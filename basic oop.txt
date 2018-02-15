@@ -1,0 +1,32 @@
+'''
+implement the Customer class based on the identified class structure and details given below:
+
+    1. Consider all instance variables and methods to be public
+    2. Assume that bill_amount is initialized with total bill amount of the customer
+    3. Customer is eligible for 5% discount on the bill amount
+    4. purchases(): Compute discounted bill amount and pay bill
+    5. pays_bill(amount): Display, <customer_name> pays bill amount of Rs. <amount>
+
+Represent few customers, invoke purchases() method and display the details.
+
+
+'''
+
+#OOP-Assgn-3
+class Customer:
+    def __init__(self):
+        self.customer_name=None
+        self.bill_amount=None
+    def purchases(self):
+        discount=self.bill_amount-(0.05*self.bill_amount)
+#         self.pays_bill(discount)
+        return discount
+    def pays_bill(self,amount):
+        return (self.customer_name+"pays bill amount of Rs."+str(amount))
+       
+        
+c1=Customer()
+c1.customer_name="Jack"
+c1.bill_amount=500
+d=c1.purchases()
+print(c1.pays_bill(d))
