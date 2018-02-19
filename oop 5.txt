@@ -1,0 +1,84 @@
+'''
+"Infinity" IT solution wants to automate their recruitment process. They have decided to accept 5 applications for each of the three job bands ("A", "B" and "C") in the company.
+
+Write a Python program to implement the class diagram given below.
+
+class diag:
+ApplicaNT
+----------------
+-APPLICATION DICT->static
+-applicant id count->static
+-applicant id
+-applicant name
+-job BAND
+------------------
+__init__(applicant name)
++apply for job(job band)
++generate apoplicant id
++all getters
+------------------
+
+Method/Attribute description:
+1. Initialize static variable, applicant_id_count to 1000
+2. application_dict: Dictionary which store application count (value) for each job band (key)
+3. generate_applicant_id(): Auto-generate applicant id starting from 1001 and initialize attribute, applicant_id
+4. apply_for_job(job_band): Accept the job band for which the applicant is applying.
+	a. Check if application count for the applied job band has reached the maximum limit, 5. If so, return -1.
+	b. Else,
+		increment application count for the applied job band by 1 in the dictionary
+		generate applicant id and
+		initialize attribute, job_band with the applied job_band
+For testing:
+Create objects of Applicant class
+Invoke apply_for_job(job_band) method on Applicant object by passing the job band for which applicant is applying
+If application is accepted, display applicant id, name and job band
+Else, display appropriate error message
+
+'''
+
+#OOP-Assgn-16
+
+class Applicant:
+    __application_dict={"A":0,"B":0,"C":0}
+    __applicant_id_count=1000
+    def __init__(self,applicant_name):
+        self.__applicant_name=applicant_name
+        self.__applicant_id=None
+        self.__job_band=None
+
+    def get_applicant_name(self):
+        return self.__applicant_name
+
+
+    def get_applicant_id(self):
+        return self.__applicant_id
+
+
+    def get_job_band(self):
+        return self.__job_band
+
+    def generate_applicant_id(self):
+        Applicant.__applicant_id_count+=1
+        self.__applicant_id=Applicant.__applicant_id_count
+        return self.__applicant_id
+        
+    def apply_for_job(self, job_band):
+        self.__job_band=job_band
+        if Applicant.__application_dict.get(self.__job_band)>=5:
+            return -1
+        else:
+            Applicant.__application_dict[self.__job_band]+=1
+            
+            self.generate_applicant_id()
+
+            
+            
+        
+    @staticmethod
+    def get_application_dict():
+        
+        return Applicant.__application_dict
+obj=Applicant("a")
+obj.apply_for_job("A")
+print(obj.get_applicant_id())
+print(Applicant.get_application_dict())

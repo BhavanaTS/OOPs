@@ -1,0 +1,129 @@
+'''
+Global Computer Services wants to automate their customer service process.
+
+Write a python program to implement the class diagram given below.
+
+class diag:
+comupter service			aggregate with 		customer
+----------------						-----------
+-customer							-customer name
+-service item							-phone number
+-service charge							-os required
+-total service charge						--------------											
+------------------
+__init__(customer,service item)					__init(customer name,phone num,os req)
++validate service item()					+validate phone num
++calculate total service charge()				+all getters
++all getters							--------------
+------------------
+
+
+lass description:
+Customer class: This class has been coded for you. Refer starter code.
+
+Note: Attribute, os_required is a boolean value. True indicates customer has opted for operating system, False indicates customer has not opted for operating system
+
+ComputerService class:
+1. validate_service_item(): Validate service item. Valid values for service item are "Desktop" and "Laptop". If valid, return true. Else, return false
+2. calculate_total_service_charge(): Calculate total service charge to be paid by the customer.
+	a. Validate customer.phone_number and service_item
+	b. If valid,
+		identify service charge based on service item and initialize attribute, service_charge.
+			Consider service charge of desktop to be Rs.300 and laptop to be Rs.500
+		initialize attribute, total_service_charge as identified service_charge
+		dd operating system cost of Rs. 9200 to total_service_charge, if customer has opted for operating system
+		add 5% tax on total service charge
+	c. Else, return 0
+Note: Perform case sensitive string comparison 
+
+For testing:
+	Create objects of Customer and ComputerService class
+	Invoke calculate_total_service_charge() method on ComputerService object
+	Display customer name, phone number, osrequired, service item and service charge
+	In case of errors/invalid data, display appropriate error message
+'''
+
+#OOP-Assgn-19
+#Start writing your code here
+class Customer:
+    def __init__(self,customer_name,phone_number,os_required):
+        self.__customer_name=customer_name
+        self.__phone_number=phone_number
+        self.__os_required=os_required
+    def get_customer_name(self):
+        return self.__customer_name
+    def get_phone_number(self):
+        return self.__phone_number
+    def get_os_required(self):
+        return self.__os_required
+    def validate_phone_number(self):
+        phone_number=str(self.__phone_number)
+        if(len(phone_number)==10):
+            if(phone_number.isdigit()):
+                return True
+            else:
+                return False
+        else:
+            return False
+class ComputerService:
+    def __init__(self,customer,service_item):
+        self.__customer=customer
+        self.__service_item=service_item
+        self.__service_charge=None
+        self.__total_service_charge=None
+
+    def get_customer(self):
+        return self.__customer
+
+
+    def get_service_item(self):
+        return self.__service_item
+
+
+    def get_total_service_charge(self):
+        return self.__total_service_charge
+
+    def validate_service_item(self):
+        if self.__service_item.lower() in ["desktop","laptop"]:
+            return True
+        else:
+            return False
+        
+    def calculate_total_service_charge(self):
+        if self.__customer.validate_phone_number() and self.validate_service_item():
+            
+            if self.__service_item.lower()=="desktop":
+                self.__service_charge=300
+                if self.__customer.get_os_required():
+                    self.__total_service_charge=9200+self.__service_charge
+                else:
+                    self.__total_service_charge=self.__service_charge
+                self.__total_service_charge+=(0.05*self.__total_service_charge)
+            
+            elif self.__service_item.lower()=="laptop":
+                self.__service_charge=500
+                if self.__customer.get_os_required():
+                    self.__total_service_charge=9200+self.__service_charge
+                else:
+                    self.__total_service_charge=self.__service_charge
+                self.__total_service_charge+=(0.05*self.__total_service_charge)
+            else:
+                return 0
+        else:
+            return 0
+            
+            
+                    
+           
+
+cust1=Customer("Maddy",9876543210,False)
+service1=ComputerService(cust1,"Laptop")
+result=service1.calculate_total_service_charge()
+if(result!=0):
+    print("Customer name:",service1.get_customer().get_customer_name())
+    print("Customer phone number:",service1.get_customer().get_phone_number())
+    print("OS required by customer",service1.get_customer().get_os_required())
+    print("Service item:",service1.get_service_item())
+    print("Total service charge:",service1.get_total_service_charge())
+if(result==0):
+    print("Invalid phone number / Service item")
